@@ -1,0 +1,139 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --rosewater: #f2d5cf;
+  --flamingo: #eebebe;
+  --pink: #f4b8e4;
+  --mauve: #ca9ee6;
+  --red: #e78284;
+  --maroon: #ea999c;
+  --peach: #ef9f76;
+  --yellow: #e5c890;
+  --green: #a6d189;
+  --teal: #81c8be;
+  --sky: #99d1db;
+  --sapphire: #85c1dc;
+  --blue: #8caaee;
+  --lavender: #babbf1;
+  --text: #c6d0f5;
+  --subtext-1: #b5bfe2;
+  --subtext-0: #a5adce;
+  --overlay-2: #949cbb;
+  --overlay-1: #838ba7;
+  --overlay-0: #737994;
+  --surface-2: #626880;
+  --surface-1: #51576d;
+  --surface-0: #414559;
+  --base: #303446;
+  --mantle: #292c3c;
+  --crust: #232634;
+}
+
+body {
+  background-color: var(--base);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.container {
+  .parts {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    justify-content: flex-start;
+    width: fit-content;
+    gap: 10px;
+    transition:
+      gap 0.5s,
+      border-width 0.5s;
+
+    [class^="item"] {
+      width: 200px;
+      height: 200px;
+      background-color: cyan;
+      border: 1px solid var(--text);
+      background-image: url(../assets/background.jpg);
+      background-size: 600px 600px;
+    }
+
+    .item-2 {
+      background-position: calc(600px * 2 / 3) 0;
+    }
+
+    .item-3 {
+      background-position: calc(600px / 3) 0;
+    }
+
+    .item-4 {
+      background-position: 0 calc(600px * 2 / 3);
+    }
+
+    .item-5 {
+      background-position: calc(600px * 2 / 3) calc(600px * 2 / 3);
+    }
+
+    .item-6 {
+      background-position: calc(600px / 3) calc(600px * 2 / 3);
+    }
+
+    .item-7 {
+      background-position: 0 calc(600px / 3);
+    }
+
+    .item-8 {
+      background-position: calc(600px * 2 / 3) calc(600px / 3);
+    }
+
+    .item-9 {
+      background-position: calc(600px / 3) calc(600px / 3);
+    }
+
+    .empty {
+      background: transparent;
+      border: none;
+    }
+  }
+  .controls {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    .arrow {
+      background-color: var(--yellow);
+      max-width: 80px;
+      max-height: 80px;
+      border-radius: 10px;
+      border: solid 4px #111;
+      padding: 10px;
+      cursor: pointer;
+      &:hover {
+        background-color: hsl(40 62% 80% / 100%);
+      }
+      img {
+        width: 100%;
+      }
+    }
+    .up {
+      img {
+        transform: rotate(-90deg);
+      }
+      & + div {
+        display: flex;
+        gap: 5px;
+      }
+    }
+    .left {
+      transform: rotate(180deg);
+    }
+    .down {
+      transform: rotate(90deg);
+    }
+  }
+}
