@@ -9,19 +9,25 @@
     <script type="text/javascript" src="main.js" defer></script>
   </head>
   <body>
+    <div class="welcome">
+      <div class="slider">
+        <div class="choose-photo"></div>
+        <div class="choose-difficulty"></div>
+      </div>
+    </div>
     <div class="container">
       <div class="topbar">
-        <button class="btn">
+        <button>
           <i class="fa-solid fa-gear settings"></i>
           <div class="settings">settings</div>
         </button>
-        <button class="btn">
+        <button>
           <i class="fa-solid fa-repeat restart"></i>
           <div class="restart">restart</div>
         </button>
-        <button class="btn">
+        <button>
           <i class="fa-solid fa-hourglass-start time"></i>
-          <div class="time">time: 0</div>
+          <div class="time">time: 0.0</div>
         </button>
       </div>
       <div class="parts"></div>
@@ -32,6 +38,9 @@
           <i class="fa-solid fa-arrow-down arrow down"></i>
           <i class="fa-solid fa-arrow-right arrow right"></i>
         </div>
+      </div>
+      <div class="congrats">
+        <div class="congrats-text">Congratulations</div>
       </div>
     </div>
   </body>
