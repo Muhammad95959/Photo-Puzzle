@@ -5,17 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title></title>
     <link rel="stylesheet" href="css/style.css" />
+    <link href="fonts/fontAweosome/css/all.min.css" rel="stylesheet" />
     <script type="text/javascript" src="main.js" defer></script>
   </head>
   <body>
     <div class="container">
+      <div class="topbar">
+        <button class="btn">
+          <i class="fa-solid fa-gear settings"></i>
+          <div class="settings">settings</div>
+        </button>
+        <button class="btn">
+          <i class="fa-solid fa-repeat restart"></i>
+          <div class="restart">restart</div>
+        </button>
+        <button class="btn">
+          <i class="fa-solid fa-hourglass-start time"></i>
+          <div class="time">time: 0</div>
+        </button>
+      </div>
       <div class="parts"></div>
       <div class="controls">
-        <div class="arrow up"><img src="assets/arrow.svg" alt="" /></div>
+        <i class="fa-solid fa-arrow-up arrow up"></i>
         <div>
-          <div class="arrow left"><img src="assets/arrow.svg" alt="" /></div>
-          <div class="arrow down"><img src="assets/arrow.svg" alt="" /></div>
-          <div class="arrow right"><img src="assets/arrow.svg" alt="" /></div>
+          <i class="fa-solid fa-arrow-left arrow left"></i>
+          <i class="fa-solid fa-arrow-down arrow down"></i>
+          <i class="fa-solid fa-arrow-right arrow right"></i>
         </div>
       </div>
     </div>
