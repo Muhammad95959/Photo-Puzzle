@@ -44,60 +44,23 @@ body {
 .container {
   .parts {
     display: grid;
-    grid-template-columns: auto auto auto;
     justify-content: flex-start;
     width: fit-content;
     gap: 10px;
     transition:
       gap 0.5s,
       border-width 0.5s;
-
-    [class^="item"] {
-      width: 200px;
-      height: 200px;
-      background-color: cyan;
+    [class^="part-"] {
+      background-color: var(--sky);
       border: 1px solid var(--text);
       background-image: url(../assets/background.jpg);
-      background-size: 600px 600px;
     }
-
-    .item-2 {
-      background-position: calc(600px * 2 / 3) 0;
-    }
-
-    .item-3 {
-      background-position: calc(600px / 3) 0;
-    }
-
-    .item-4 {
-      background-position: 0 calc(600px * 2 / 3);
-    }
-
-    .item-5 {
-      background-position: calc(600px * 2 / 3) calc(600px * 2 / 3);
-    }
-
-    .item-6 {
-      background-position: calc(600px / 3) calc(600px * 2 / 3);
-    }
-
-    .item-7 {
-      background-position: 0 calc(600px / 3);
-    }
-
-    .item-8 {
-      background-position: calc(600px * 2 / 3) calc(600px / 3);
-    }
-
-    .item-9 {
-      background-position: calc(600px / 3) calc(600px / 3);
-    }
-
     .empty {
       background: transparent;
       border: none;
     }
   }
+
   .controls {
     margin-top: 20px;
     display: flex;
