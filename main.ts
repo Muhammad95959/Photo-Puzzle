@@ -7,6 +7,8 @@ const welcomeSliderCards = Array.from(
 const welcomeNavDots = Array.from(
   document.querySelectorAll(".welcome .nav-dots > i"),
 ) as HTMLElement[];
+const images = Array.from(document.querySelectorAll(".welcome .images .image")) as HTMLDivElement[];
+
 const startNowBtn = document.querySelector(".welcome .start-card button") as HTMLButtonElement;
 const partsContainer = document.querySelector(".parts") as HTMLDivElement;
 const partsBaseCount: number = 3;
@@ -23,6 +25,33 @@ let emptyPart: HTMLDivElement;
 let parts: HTMLDivElement[];
 let lastPart = document.createElement("div") as HTMLDivElement;
 lastPart.classList.add(`part-${partsCount}`);
+
+// create the parts and add them to the container
+for (let i = 1; i <= partsCount; i++) {
+  const part = document.createElement("div");
+  if (i === partsCount) {
+    part.classList.add("empty");
+    part.dataset.order = i.toString();
+  } else {
+    part.classList.add(`part-${i}`);
+    part.dataset.order = i.toString();
+  }
+  partsContainer.appendChild(part);
+}
+parts = Array.from(partsContainer.children) as HTMLDivElement[];
+emptyPart = document.querySelector(".container .empty") as HTMLDivElement;
+
+// size the parts according to the browser width
+resizeParts();
+window.addEventListener("resize", resizeParts);
+
+// shuffle the parts "randomize the orders"
+do {
+  const shuffledParts = [...parts].sort(() => Math.random() - 0.5);
+  for (let i = 0; i < partsCount; i++) {
+    shuffledParts[i].style.order = (i + 1).toString();
+  }
+} while (checkCorrectOrder(false));
 
 welcomeLeftArrow.addEventListener("click", () => {
   welcomeRightArrow.classList.add("available");
@@ -52,6 +81,18 @@ welcomeRightArrow.addEventListener("click", () => {
   welcomeNavDots[nextCardIndex].classList.add("active");
 });
 
+images.forEach((image) => {
+  image.addEventListener("click", () => {
+    images.forEach((img) => img.classList.remove("selected"));
+    image.classList.add("selected");
+    const imageName = image.dataset.name;
+    const unEmptyParts = Array.from(
+      document.querySelectorAll(".parts [class^='part-']"),
+    ) as HTMLDivElement[];
+    unEmptyParts.forEach((part) => (part.style.backgroundImage = `url(../assets/${imageName})`));
+  });
+});
+
 startNowBtn.addEventListener("click", () => {
   welcomeContainer.style.display = "none";
   (document.querySelector(".container") as HTMLDivElement).classList.remove("hidden");
@@ -61,33 +102,6 @@ startNowBtn.addEventListener("click", () => {
   downArrow.addEventListener("click", moveEmptyDown);
   rightArrow.addEventListener("click", moveEmptyRight);
 });
-
-// create the parts and add them to the container
-for (let i = 1; i <= partsCount; i++) {
-  const part = document.createElement("div");
-  if (i === partsCount) {
-    part.classList.add("empty");
-    part.dataset.order = i.toString();
-  } else {
-    part.classList.add(`part-${i}`);
-    part.dataset.order = i.toString();
-  }
-  partsContainer.appendChild(part);
-}
-parts = Array.from(partsContainer.children) as HTMLDivElement[];
-emptyPart = document.querySelector(".container .empty") as HTMLDivElement;
-
-// size the parts according to the browser width
-resizeParts();
-window.addEventListener("resize", resizeParts);
-
-// shuffle the parts "randomize the orders"
-do {
-  const shuffledParts = [...parts].sort(() => Math.random() - 0.5);
-  for (let i = 0; i < partsCount; i++) {
-    shuffledParts[i].style.order = (i + 1).toString();
-  }
-} while (checkCorrectOrder(false));
 
 function handleKeyboardInput(ev: KeyboardEvent) {
   switch (ev.key) {
