@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title></title>
+    <title>Photo-Puzzle</title>
     <link rel="stylesheet" href="css/style.css" />
     <link href="fonts/fontAweosome/css/all.min.css" rel="stylesheet" />
     <script type="text/javascript" src="main.js" defer></script>
@@ -11,8 +11,51 @@
   <body>
     <div class="welcome">
       <div class="slider">
-        <div class="choose-photo"></div>
-        <div class="choose-difficulty"></div>
+        <div class="welcome-card active">
+          <div class="big">Welcome</div>
+          <div class="small">
+            Photo Puzzle game is designed by
+            <a href="https://github.com/Muhammad95959" target="_blank">Muhammad Hefzey</a>
+          </div>
+        </div>
+        <div class="choose-photo">
+          <div class="images">
+            <div class="image selected"><img src="assets/photo-1.jpg" alt="" /></div>
+            <div class="image"><img src="assets/photo-2.jpg" alt="" /></div>
+            <div class="image"><img src="assets/photo-3.jpg" alt="" /></div>
+            <div class="image"><img src="assets/photo-4.jpg" alt="" /></div>
+            <div class="image"><img src="assets/photo-5.jpg" alt="" /></div>
+            <div class="image"><img src="assets/photo-6.jpg" alt="" /></div>
+          </div>
+          <button class="more">more photos</button>
+          <div class="dialog hidden">
+            <div class="closeBtn">X</div>
+            <div class="text">Choose Your own photo</div>
+            <div class="buttons">
+              <button class="local">Local</button>
+              <button class="web">Web</button>
+            </div>
+          </div>
+        </div>
+        <div class="choose-difficulty">
+          <div class="selected">3x3</div>
+          <div>4x4</div>
+          <div>5x5</div>
+          <div>6x6</div>
+          <div>7x7</div>
+          <div>8x8</div>
+        </div>
+        <div class="start-card">
+          <button>start now</button>
+        </div>
+      </div>
+      <div class="arrow left"><i class="fa-solid fa-chevron-left"></i></div>
+      <div class="arrow right available"><i class="fa-solid fa-chevron-right"></i></div>
+      <div class="nav-dots">
+        <i class="fa-solid fa-circle"></i>
+        <i class="fa-solid fa-circle"></i>
+        <i class="fa-solid fa-circle"></i>
+        <i class="fa-solid fa-circle"></i>
       </div>
     </div>
     <div class="container">
