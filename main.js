@@ -5,15 +5,17 @@ const welcomeRightArrow = document.querySelector(".welcome .arrow.right");
 const welcomeSliderCards = Array.from(document.querySelectorAll(".welcome .slider > div"));
 const welcomeNavDots = Array.from(document.querySelectorAll(".welcome .nav-dots > i"));
 const images = Array.from(document.querySelectorAll(".welcome .images .image"));
+const difficulties = Array.from(document.querySelectorAll(".welcome .choose-difficulty > div"));
 const startNowBtn = document.querySelector(".welcome .start-card button");
 const partsContainer = document.querySelector(".parts");
-const partsBaseCount = 3;
-const partsCount = partsBaseCount * partsBaseCount;
 const upArrow = document.querySelector(".container .arrow.up");
 const leftArrow = document.querySelector(".container .arrow.left");
 const downArrow = document.querySelector(".container .arrow.down");
 const rightArrow = document.querySelector(".container .arrow.right");
 let started = false;
+let gameHidden = true;
+let partsBaseCount = 3;
+let partsCount = partsBaseCount * partsBaseCount;
 let selectedPhotoName;
 let timeTracker;
 let oldPartsContainerWidth;
@@ -21,31 +23,11 @@ let emptyPart;
 let parts;
 let lastPart = document.createElement("div");
 lastPart.classList.add(`part-${partsCount}`);
-// create the parts and add them to the container
-for (let i = 1; i <= partsCount; i++) {
-    const part = document.createElement("div");
-    if (i === partsCount) {
-        part.classList.add("empty");
-        part.dataset.order = i.toString();
-    }
-    else {
-        part.classList.add(`part-${i}`);
-        part.dataset.order = i.toString();
-    }
-    partsContainer.appendChild(part);
-}
-parts = Array.from(partsContainer.children);
-emptyPart = document.querySelector(".container .empty");
-// size the parts according to the browser width
-resizeParts();
-window.addEventListener("resize", resizeParts);
-// shuffle the parts "randomize the orders"
-do {
-    const shuffledParts = [...parts].sort(() => Math.random() - 0.5);
-    for (let i = 0; i < partsCount; i++) {
-        shuffledParts[i].style.order = (i + 1).toString();
-    }
-} while (checkCorrectOrder(false));
+// create the parts and size them according to the browser width then shuffle them
+createParts();
+sizeParts();
+shuffleParts();
+window.addEventListener("resize", sizeParts);
 welcomeLeftArrow.addEventListener("click", () => {
     welcomeRightArrow.classList.add("available");
     const currentCard = welcomeSliderCards.filter((card) => card.classList.contains("active"))[0];
@@ -77,13 +59,24 @@ images.forEach((image) => {
         images.forEach((img) => img.classList.remove("selected"));
         image.classList.add("selected");
         const imageName = image.dataset.name;
-        const unEmptyParts = Array.from(document.querySelectorAll(".parts [class^='part-']"));
-        unEmptyParts.forEach((part) => (part.style.backgroundImage = `url(../assets/${imageName})`));
+        document.documentElement.style.setProperty("--imageUrl", `url('../assets/${imageName}')`);
+    });
+});
+difficulties.forEach((diff) => {
+    diff.addEventListener("click", () => {
+        difficulties.forEach((img) => img.classList.remove("selected"));
+        diff.classList.add("selected");
+        partsBaseCount = parseInt(diff.dataset.diff);
+        partsCount = partsBaseCount * partsBaseCount;
+        createParts();
+        sizeParts();
+        shuffleParts();
     });
 });
 startNowBtn.addEventListener("click", () => {
     welcomeContainer.style.display = "none";
     document.querySelector(".container").classList.remove("hidden");
+    gameHidden = false;
     window.addEventListener("keydown", handleKeyboardInput);
     upArrow.addEventListener("click", moveEmptyUp);
     leftArrow.addEventListener("click", moveEmptyLeft);
@@ -106,7 +99,24 @@ function handleKeyboardInput(ev) {
             break;
     }
 }
-function resizeParts() {
+function createParts() {
+    partsContainer.innerHTML = "";
+    for (let i = 1; i <= partsCount; i++) {
+        const part = document.createElement("div");
+        if (i === partsCount) {
+            part.classList.add("empty");
+            part.dataset.order = i.toString();
+        }
+        else {
+            part.classList.add(`part-${i}`);
+            part.dataset.order = i.toString();
+        }
+        partsContainer.appendChild(part);
+    }
+    parts = Array.from(partsContainer.children);
+    emptyPart = document.querySelector(".container .empty");
+}
+function sizeParts() {
     let partsContainerWidth;
     let partWidth;
     const windowWidth = window.innerWidth;
@@ -118,7 +128,7 @@ function resizeParts() {
         partsContainerWidth = 500;
     else
         partsContainerWidth = 600;
-    if (oldPartsContainerWidth !== partsContainerWidth) {
+    if (oldPartsContainerWidth !== partsContainerWidth || gameHidden) {
         oldPartsContainerWidth = partsContainerWidth;
         partsContainer.style.gridTemplateColumns = `repeat(${partsBaseCount}, auto)`;
         partWidth = partsContainerWidth / partsBaseCount;
@@ -138,6 +148,14 @@ function resizeParts() {
         }
         lastPart.style.backgroundPosition = `-${partWidth * --col}px -${partWidth * --row}px`;
     }
+}
+function shuffleParts() {
+    do {
+        const shuffledParts = [...parts].sort(() => Math.random() - 0.5);
+        for (let i = 0; i < partsCount; i++) {
+            shuffledParts[i].style.order = (i + 1).toString();
+        }
+    } while (checkCorrectOrder(false));
 }
 function moveEmptyUp() {
     const emptyOrder = +emptyPart.style.order;

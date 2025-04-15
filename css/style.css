@@ -31,6 +31,7 @@
   --base: #303446;
   --mantle: #292c3c;
   --crust: #232634;
+  --imageUrl: url(../assets/photo-1.jpg);
 }
 
 @font-face {
@@ -418,7 +419,7 @@ body {
       [class^="part-"] {
         background-color: var(--sky);
         border: 1px solid var(--text);
-        background-image: url(../assets/photo-1.jpg);
+        background-image: var(--imageUrl);
         transition: border-width 0.5s;
       }
       .empty {
