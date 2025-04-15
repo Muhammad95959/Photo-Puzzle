@@ -5,6 +5,21 @@ const welcomeRightArrow = document.querySelector(".welcome .arrow.right");
 const welcomeSliderCards = Array.from(document.querySelectorAll(".welcome .slider > div"));
 const welcomeNavDots = Array.from(document.querySelectorAll(".welcome .nav-dots > i"));
 const startNowBtn = document.querySelector(".welcome .start-card button");
+const partsContainer = document.querySelector(".parts");
+const partsBaseCount = 3;
+const partsCount = partsBaseCount * partsBaseCount;
+const upArrow = document.querySelector(".container .arrow.up");
+const leftArrow = document.querySelector(".container .arrow.left");
+const downArrow = document.querySelector(".container .arrow.down");
+const rightArrow = document.querySelector(".container .arrow.right");
+let started = false;
+let selectedPhotoName;
+let timeTracker;
+let oldPartsContainerWidth;
+let emptyPart;
+let parts;
+let lastPart = document.createElement("div");
+lastPart.classList.add(`part-${partsCount}`);
 welcomeLeftArrow.addEventListener("click", () => {
     welcomeRightArrow.classList.add("available");
     const currentCard = welcomeSliderCards.filter((card) => card.classList.contains("active"))[0];
@@ -34,10 +49,12 @@ welcomeRightArrow.addEventListener("click", () => {
 startNowBtn.addEventListener("click", () => {
     welcomeContainer.style.display = "none";
     document.querySelector(".container").classList.remove("hidden");
+    window.addEventListener("keydown", handleKeyboardInput);
+    upArrow.addEventListener("click", moveEmptyUp);
+    leftArrow.addEventListener("click", moveEmptyLeft);
+    downArrow.addEventListener("click", moveEmptyDown);
+    rightArrow.addEventListener("click", moveEmptyRight);
 });
-const partsContainer = document.querySelector(".parts");
-const partsBaseCount = 3;
-const partsCount = partsBaseCount * partsBaseCount;
 // create the parts and add them to the container
 for (let i = 1; i <= partsCount; i++) {
     const part = document.createElement("div");
@@ -51,33 +68,18 @@ for (let i = 1; i <= partsCount; i++) {
     }
     partsContainer.appendChild(part);
 }
+parts = Array.from(partsContainer.children);
+emptyPart = document.querySelector(".container .empty");
 // size the parts according to the browser width
-const parts = Array.from(partsContainer.children);
-let oldPartsContainerWidth;
-let lastPart = document.createElement("div");
-lastPart.classList.add(`part-${partsCount}`);
 resizeParts();
 window.addEventListener("resize", resizeParts);
 // shuffle the parts "randomize the orders"
 do {
-    // TODO: improve the shuffling
     const shuffledParts = [...parts].sort(() => Math.random() - 0.5);
     for (let i = 0; i < partsCount; i++) {
         shuffledParts[i].style.order = (i + 1).toString();
     }
 } while (checkCorrectOrder(false));
-const upArrow = document.querySelector(".container .arrow.up");
-const leftArrow = document.querySelector(".container .arrow.left");
-const downArrow = document.querySelector(".container .arrow.down");
-const rightArrow = document.querySelector(".container .arrow.right");
-const emptyPart = document.querySelector(".container .empty");
-let started = false;
-let timeTracker;
-window.addEventListener("keydown", handleKeyboardInput);
-upArrow.addEventListener("click", moveEmptyUp);
-leftArrow.addEventListener("click", moveEmptyLeft);
-downArrow.addEventListener("click", moveEmptyDown);
-rightArrow.addEventListener("click", moveEmptyRight);
 function handleKeyboardInput(ev) {
     switch (ev.key) {
         case "ArrowUp":
@@ -213,6 +215,7 @@ function stopMoving() {
     rightArrow.removeEventListener("click", moveEmptyRight);
     window.removeEventListener("keydown", handleKeyboardInput);
 }
+// Not-Implemented Section
 const notImplementedDiv = document.querySelector(".not-implemented");
 const notImplementedCloseBtn = document.querySelector(".not-implemented .closeBtn");
 let notImplementedTime;

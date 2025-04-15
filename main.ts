@@ -8,6 +8,21 @@ const welcomeNavDots = Array.from(
   document.querySelectorAll(".welcome .nav-dots > i"),
 ) as HTMLElement[];
 const startNowBtn = document.querySelector(".welcome .start-card button") as HTMLButtonElement;
+const partsContainer = document.querySelector(".parts") as HTMLDivElement;
+const partsBaseCount: number = 3;
+const partsCount: number = partsBaseCount * partsBaseCount;
+const upArrow = document.querySelector(".container .arrow.up") as HTMLDivElement;
+const leftArrow = document.querySelector(".container .arrow.left") as HTMLDivElement;
+const downArrow = document.querySelector(".container .arrow.down") as HTMLDivElement;
+const rightArrow = document.querySelector(".container .arrow.right") as HTMLDivElement;
+let started: boolean = false;
+let selectedPhotoName: string;
+let timeTracker: number;
+let oldPartsContainerWidth: number;
+let emptyPart: HTMLDivElement;
+let parts: HTMLDivElement[];
+let lastPart = document.createElement("div") as HTMLDivElement;
+lastPart.classList.add(`part-${partsCount}`);
 
 welcomeLeftArrow.addEventListener("click", () => {
   welcomeRightArrow.classList.add("available");
@@ -40,11 +55,12 @@ welcomeRightArrow.addEventListener("click", () => {
 startNowBtn.addEventListener("click", () => {
   welcomeContainer.style.display = "none";
   (document.querySelector(".container") as HTMLDivElement).classList.remove("hidden");
+  window.addEventListener("keydown", handleKeyboardInput);
+  upArrow.addEventListener("click", moveEmptyUp);
+  leftArrow.addEventListener("click", moveEmptyLeft);
+  downArrow.addEventListener("click", moveEmptyDown);
+  rightArrow.addEventListener("click", moveEmptyRight);
 });
-
-const partsContainer = document.querySelector(".parts") as HTMLDivElement;
-const partsBaseCount: number = 3;
-const partsCount: number = partsBaseCount * partsBaseCount;
 
 // create the parts and add them to the container
 for (let i = 1; i <= partsCount; i++) {
@@ -58,37 +74,20 @@ for (let i = 1; i <= partsCount; i++) {
   }
   partsContainer.appendChild(part);
 }
+parts = Array.from(partsContainer.children) as HTMLDivElement[];
+emptyPart = document.querySelector(".container .empty") as HTMLDivElement;
 
 // size the parts according to the browser width
-const parts = Array.from(partsContainer.children) as HTMLDivElement[];
-let oldPartsContainerWidth: number;
-let lastPart = document.createElement("div") as HTMLDivElement;
-lastPart.classList.add(`part-${partsCount}`);
 resizeParts();
 window.addEventListener("resize", resizeParts);
 
 // shuffle the parts "randomize the orders"
 do {
-  // TODO: improve the shuffling
   const shuffledParts = [...parts].sort(() => Math.random() - 0.5);
   for (let i = 0; i < partsCount; i++) {
     shuffledParts[i].style.order = (i + 1).toString();
   }
 } while (checkCorrectOrder(false));
-
-const upArrow = document.querySelector(".container .arrow.up") as HTMLDivElement;
-const leftArrow = document.querySelector(".container .arrow.left") as HTMLDivElement;
-const downArrow = document.querySelector(".container .arrow.down") as HTMLDivElement;
-const rightArrow = document.querySelector(".container .arrow.right") as HTMLDivElement;
-const emptyPart = document.querySelector(".container .empty") as HTMLDivElement;
-let started: boolean = false;
-let timeTracker: number;
-
-window.addEventListener("keydown", handleKeyboardInput);
-upArrow.addEventListener("click", moveEmptyUp);
-leftArrow.addEventListener("click", moveEmptyLeft);
-downArrow.addEventListener("click", moveEmptyDown);
-rightArrow.addEventListener("click", moveEmptyRight);
 
 function handleKeyboardInput(ev: KeyboardEvent) {
   switch (ev.key) {
@@ -229,6 +228,7 @@ function stopMoving() {
   window.removeEventListener("keydown", handleKeyboardInput);
 }
 
+// Not-Implemented Section
 const notImplementedDiv = document.querySelector(".not-implemented") as HTMLDivElement;
 const notImplementedCloseBtn = document.querySelector(
   ".not-implemented .closeBtn",
