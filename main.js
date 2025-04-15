@@ -5,6 +5,9 @@ const welcomeRightArrow = document.querySelector(".welcome .arrow.right");
 const welcomeSliderCards = Array.from(document.querySelectorAll(".welcome .slider > div"));
 const welcomeNavDots = Array.from(document.querySelectorAll(".welcome .nav-dots > i"));
 const images = Array.from(document.querySelectorAll(".welcome .images .image"));
+const moreImagesBtn = document.querySelector(".welcome button.more");
+const moreImagesDialog = document.querySelector(".welcome .dialog");
+const moreImagesCloseBtn = document.querySelector(".welcome .dialog .closeBtn");
 const difficulties = Array.from(document.querySelectorAll(".welcome .choose-difficulty > div"));
 const startNowBtn = document.querySelector(".welcome .start-card button");
 const partsContainer = document.querySelector(".parts");
@@ -87,6 +90,8 @@ images.forEach((image) => {
         window.localStorage.setItem("selected-image", imageName);
     });
 });
+moreImagesBtn.addEventListener("click", () => moreImagesDialog.classList.remove("hidden"));
+moreImagesCloseBtn.addEventListener("click", () => moreImagesDialog.classList.add("hidden"));
 difficulties.forEach((diff) => {
     diff.addEventListener("click", () => {
         difficulties.forEach((img) => img.classList.remove("selected"));
@@ -292,4 +297,5 @@ function notImplemented() {
     }
     notImplementedTime = setTimeout(() => notImplementedDiv.classList.add("hidden"), 3000);
 }
-document.querySelector("button.more").onclick = notImplemented;
+document.querySelector("button.local").onclick = notImplemented;
+document.querySelector("button.web").onclick = notImplemented;

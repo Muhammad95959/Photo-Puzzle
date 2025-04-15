@@ -8,6 +8,9 @@ const welcomeNavDots = Array.from(
   document.querySelectorAll(".welcome .nav-dots > i"),
 ) as HTMLElement[];
 const images = Array.from(document.querySelectorAll(".welcome .images .image")) as HTMLDivElement[];
+const moreImagesBtn = document.querySelector(".welcome button.more") as HTMLButtonElement;
+const moreImagesDialog = document.querySelector(".welcome .dialog") as HTMLDivElement;
+const moreImagesCloseBtn = document.querySelector(".welcome .dialog .closeBtn") as HTMLDivElement;
 const difficulties = Array.from(
   document.querySelectorAll(".welcome .choose-difficulty > div"),
 ) as HTMLDivElement[];
@@ -96,6 +99,10 @@ images.forEach((image) => {
     window.localStorage.setItem("selected-image", imageName as string);
   });
 });
+
+moreImagesBtn.addEventListener("click", () => moreImagesDialog.classList.remove("hidden"));
+
+moreImagesCloseBtn.addEventListener("click", () => moreImagesDialog.classList.add("hidden"));
 
 difficulties.forEach((diff) => {
   diff.addEventListener("click", () => {
@@ -315,4 +322,5 @@ function notImplemented() {
   notImplementedTime = setTimeout(() => notImplementedDiv.classList.add("hidden"), 3000);
 }
 
-(document.querySelector("button.more") as HTMLButtonElement).onclick = notImplemented;
+(document.querySelector("button.local") as HTMLButtonElement).onclick = notImplemented;
+(document.querySelector("button.web") as HTMLButtonElement).onclick = notImplemented;
