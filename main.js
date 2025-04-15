@@ -1,8 +1,10 @@
 "use strict";
+const welcomeContainer = document.querySelector(".welcome");
 const welcomeLeftArrow = document.querySelector(".welcome .arrow.left");
 const welcomeRightArrow = document.querySelector(".welcome .arrow.right");
 const welcomeSliderCards = Array.from(document.querySelectorAll(".welcome .slider > div"));
 const welcomeNavDots = Array.from(document.querySelectorAll(".welcome .nav-dots > i"));
+const startNowBtn = document.querySelector(".welcome .start-card button");
 welcomeLeftArrow.addEventListener("click", () => {
     welcomeRightArrow.classList.add("available");
     const currentCard = welcomeSliderCards.filter((card) => card.classList.contains("active"))[0];
@@ -28,6 +30,10 @@ welcomeRightArrow.addEventListener("click", () => {
     const nextCardIndex = welcomeSliderCards.indexOf(nextCard);
     welcomeNavDots[nextCardIndex - 1].classList.remove("active");
     welcomeNavDots[nextCardIndex].classList.add("active");
+});
+startNowBtn.addEventListener("click", () => {
+    welcomeContainer.style.display = "none";
+    document.querySelector(".container").classList.remove("hidden");
 });
 const partsContainer = document.querySelector(".parts");
 const partsBaseCount = 3;
@@ -60,11 +66,11 @@ do {
         shuffledParts[i].style.order = (i + 1).toString();
     }
 } while (checkCorrectOrder(false));
-const upArrow = document.querySelector(".arrow.up");
-const leftArrow = document.querySelector(".arrow.left");
-const downArrow = document.querySelector(".arrow.down");
-const rightArrow = document.querySelector(".arrow.right");
-const emptyPart = document.querySelector(".empty");
+const upArrow = document.querySelector(".container .arrow.up");
+const leftArrow = document.querySelector(".container .arrow.left");
+const downArrow = document.querySelector(".container .arrow.down");
+const rightArrow = document.querySelector(".container .arrow.right");
+const emptyPart = document.querySelector(".container .empty");
 let started = false;
 let timeTracker;
 window.addEventListener("keydown", handleKeyboardInput);

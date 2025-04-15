@@ -335,14 +335,18 @@ body {
   }
 
   .container {
-    transition: opacity 0.5s;
+    transition: opacity 1s;
     display: flex;
-    display: none;
     flex-direction: column;
     align-items: center;
     gap: 20px;
     z-index: 1;
     padding: 20px;
+    &.hidden {
+      visibility: hidden;
+      opacity: 0;
+      position: absolute;
+    }
 
     .topbar {
       width: 100%;

@@ -1,7 +1,13 @@
+const welcomeContainer = document.querySelector(".welcome") as HTMLDivElement;
 const welcomeLeftArrow = document.querySelector(".welcome .arrow.left") as HTMLButtonElement;
 const welcomeRightArrow = document.querySelector(".welcome .arrow.right") as HTMLButtonElement;
-const welcomeSliderCards = Array.from(document.querySelectorAll(".welcome .slider > div")) as HTMLDivElement[];
-const welcomeNavDots = Array.from(document.querySelectorAll(".welcome .nav-dots > i")) as HTMLElement[];
+const welcomeSliderCards = Array.from(
+  document.querySelectorAll(".welcome .slider > div"),
+) as HTMLDivElement[];
+const welcomeNavDots = Array.from(
+  document.querySelectorAll(".welcome .nav-dots > i"),
+) as HTMLElement[];
+const startNowBtn = document.querySelector(".welcome .start-card button") as HTMLButtonElement;
 
 welcomeLeftArrow.addEventListener("click", () => {
   welcomeRightArrow.classList.add("available");
@@ -13,8 +19,8 @@ welcomeLeftArrow.addEventListener("click", () => {
     welcomeLeftArrow.classList.remove("available");
   }
   const prevCardIndex = welcomeSliderCards.indexOf(prevCard);
-  welcomeNavDots[prevCardIndex + 1].classList.remove("active")
-  welcomeNavDots[prevCardIndex].classList.add("active")
+  welcomeNavDots[prevCardIndex + 1].classList.remove("active");
+  welcomeNavDots[prevCardIndex].classList.add("active");
 });
 
 welcomeRightArrow.addEventListener("click", () => {
@@ -27,8 +33,13 @@ welcomeRightArrow.addEventListener("click", () => {
     welcomeRightArrow.classList.remove("available");
   }
   const nextCardIndex = welcomeSliderCards.indexOf(nextCard);
-  welcomeNavDots[nextCardIndex - 1].classList.remove("active")
-  welcomeNavDots[nextCardIndex].classList.add("active")
+  welcomeNavDots[nextCardIndex - 1].classList.remove("active");
+  welcomeNavDots[nextCardIndex].classList.add("active");
+});
+
+startNowBtn.addEventListener("click", () => {
+  welcomeContainer.style.display = "none";
+  (document.querySelector(".container") as HTMLDivElement).classList.remove("hidden");
 });
 
 const partsContainer = document.querySelector(".parts") as HTMLDivElement;
@@ -65,11 +76,11 @@ do {
   }
 } while (checkCorrectOrder(false));
 
-const upArrow = document.querySelector(".arrow.up") as HTMLDivElement;
-const leftArrow = document.querySelector(".arrow.left") as HTMLDivElement;
-const downArrow = document.querySelector(".arrow.down") as HTMLDivElement;
-const rightArrow = document.querySelector(".arrow.right") as HTMLDivElement;
-const emptyPart = document.querySelector(".empty") as HTMLDivElement;
+const upArrow = document.querySelector(".container .arrow.up") as HTMLDivElement;
+const leftArrow = document.querySelector(".container .arrow.left") as HTMLDivElement;
+const downArrow = document.querySelector(".container .arrow.down") as HTMLDivElement;
+const rightArrow = document.querySelector(".container .arrow.right") as HTMLDivElement;
+const emptyPart = document.querySelector(".container .empty") as HTMLDivElement;
 let started: boolean = false;
 let timeTracker: number;
 
