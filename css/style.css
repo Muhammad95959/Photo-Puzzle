@@ -100,6 +100,7 @@ body {
         transition: opacity 1s;
         text-align: center;
         .big {
+          color: white;
           font-size: 80px;
           margin-bottom: 20px;
           font-weight: bold;
@@ -114,6 +115,7 @@ body {
           }
         }
         .small {
+          color: white;
           font-size: 20px;
           font-weight: 500;
           line-height: 1.5;
@@ -625,6 +627,7 @@ body {
       }
     }
     .text {
+      color: white;
       font-weight: bold;
     }
   }

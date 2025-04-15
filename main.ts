@@ -32,6 +32,7 @@ lastPart.classList.add(`part-${partsCount}`);
 // restore from localStorage
 images.forEach((image) => {
   const imageName = window.localStorage.getItem("selected-image") || images[0].dataset.name;
+  document.documentElement.style.setProperty("--imageUrl", `url('../assets/${imageName}')`);
   if (image.dataset.name === imageName) {
     image.classList.add("selected");
   } else {
@@ -39,13 +40,16 @@ images.forEach((image) => {
   }
 });
 difficulties.forEach((diff) => {
-  const difficulty = window.localStorage.getItem("difficulty") || difficulties[0].dataset.diff;
+  const difficulty =
+    window.localStorage.getItem("difficulty") || (difficulties[0].dataset.diff as string);
+  partsBaseCount = +difficulty;
+  partsCount = partsBaseCount * partsBaseCount;
   if (diff.dataset.diff === difficulty) {
     diff.classList.add("selected");
   } else {
     diff.classList.remove("selected");
   }
-})
+});
 
 // create, size and shuffle puzzle parts
 createParts();
