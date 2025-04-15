@@ -67,17 +67,19 @@ body {
   }
 
   .welcome {
-    /* display: none; */
     z-index: 1;
     width: 1000px;
     height: 550px;
     background-color: var(--base);
     border-radius: 20px;
     box-shadow: 1px 1px 5px 1px var(--crust);
-    margin: 20px;
+    margin: 20px 0;
     position: relative;
-    @media (max-width: 920px) {
-      width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    @media (max-width: 1040px) {
+      max-width: calc(100% - 40px);
     }
 
     .slider {
@@ -87,6 +89,12 @@ body {
       align-items: center;
       justify-content: center;
       overflow: hidden;
+      @media (max-width: 920px) {
+        max-width: calc(100% - 150px);
+      }
+      @media (max-width: 720px) {
+        max-width: calc(100% - 100px);
+      }
 
       .welcome-card {
         transition: opacity 1s;
@@ -95,10 +103,29 @@ body {
           font-size: 80px;
           margin-bottom: 20px;
           font-weight: bold;
+          @media (max-width: 720px) {
+            font-size: 70px;
+          }
+          @media (max-width: 600px) {
+            font-size: 50px;
+          }
+          @media (max-width: 480px) {
+            font-size: 40px;
+          }
         }
         .small {
           font-size: 20px;
           font-weight: 500;
+          line-height: 1.5;
+          @media (max-width: 720px) {
+            font-size: 16px;
+          }
+          @media (max-width: 600px) {
+            font-size: 14px;
+          }
+          @media (max-width: 480px) {
+            font-size: 12px;
+          }
           a {
             outline: none;
             border: none;
@@ -123,6 +150,11 @@ body {
           row-gap: 25px;
           grid-template-columns: auto auto auto;
           justify-content: space-evenly;
+          @media (max-width: 600px) {
+            grid-template-columns: auto auto;
+            column-gap: 30px;
+            row-gap: 15px;
+          }
           .image {
             width: 160px;
             height: 160px;
@@ -131,6 +163,18 @@ body {
             border-radius: 10px;
             cursor: pointer;
             transition: background-color 0.5s;
+            @media (max-width: 920px) {
+              width: 140px;
+              height: 140px;
+            }
+            @media (max-width: 750px) {
+              width: 110px;
+              height: 110px;
+            }
+            @media (max-width: 480px) {
+              width: 90px;
+              height: 90px;
+            }
             &.selected {
               background-color: var(--blue);
             }
@@ -153,6 +197,9 @@ body {
           font-weight: bold;
           cursor: pointer;
           transition: background-color 0.5s;
+          @media (max-width: 750px) {
+            font-size: 16px;
+          }
           &:hover {
             background-color: hsl(222 74% 79% / 100%);
           }
@@ -229,6 +276,11 @@ body {
         column-gap: 50px;
         row-gap: 25px;
         width: 100%;
+        @media (max-width: 600px) {
+          grid-template-columns: auto auto;
+          column-gap: 30px;
+          row-gap: 15px;
+        }
         div {
           font-size: 30px;
           font-weight: bold;
@@ -245,6 +297,11 @@ body {
           top: 50%;
           transform: translateY(-50%);
           transition: background-color 0.5s;
+          @media (max-width: 600px) {
+            font-size: 22px;
+            width: 80px;
+            height: 80px;
+          }
           &.selected {
             background-color: var(--blue);
             color: var(--crust);
@@ -271,6 +328,9 @@ body {
           color: var(--base);
           font-weight: bold;
           text-transform: capitalize;
+          @media (max-width: 720px) {
+            font-size: 16px;
+          }
           &:hover {
             background-color: hsl(222 74% 79% / 100%);
           }
@@ -297,9 +357,16 @@ body {
       height: 60px;
       background-color: transparent;
       pointer-events: none;
+      @media (max-width: 750px) {
+        width: 35px;
+        height: 35px;
+      }
       i {
         color: var(--surface-2);
         font-size: 50px;
+        @media (max-width: 750px) {
+          font-size: 30px;
+        }
       }
       &.left {
         left: 15px;
