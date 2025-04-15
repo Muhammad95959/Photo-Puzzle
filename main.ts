@@ -13,12 +13,14 @@ const difficulties = Array.from(
 ) as HTMLDivElement[];
 const startNowBtn = document.querySelector(".welcome .start-card button") as HTMLButtonElement;
 const partsContainer = document.querySelector(".parts") as HTMLDivElement;
+const settingsBtn = document.querySelector(".topbar button:has(div.settings)") as HTMLButtonElement;
+const restartBtn = document.querySelector(".topbar button:has(div.restart)") as HTMLButtonElement;
+const timeDiv = document.querySelector("div.time") as HTMLDivElement;
 const upArrow = document.querySelector(".container .arrow.up") as HTMLDivElement;
 const leftArrow = document.querySelector(".container .arrow.left") as HTMLDivElement;
 const downArrow = document.querySelector(".container .arrow.down") as HTMLDivElement;
 const rightArrow = document.querySelector(".container .arrow.right") as HTMLDivElement;
 let started: boolean = false;
-let gameHidden: boolean = true;
 let partsBaseCount: number = 3;
 let partsCount: number = partsBaseCount * partsBaseCount;
 let selectedPhotoName: string;
@@ -55,7 +57,7 @@ difficulties.forEach((diff) => {
 createParts();
 sizeParts();
 shuffleParts();
-window.addEventListener("resize", sizeParts);
+window.addEventListener("resize", () => sizeParts());
 
 welcomeLeftArrow.addEventListener("click", () => {
   welcomeRightArrow.classList.add("available");
@@ -103,7 +105,7 @@ difficulties.forEach((diff) => {
     partsCount = partsBaseCount * partsBaseCount;
     window.localStorage.setItem("difficulty", partsBaseCount.toString());
     createParts();
-    sizeParts();
+    sizeParts(true);
     shuffleParts();
   });
 });
@@ -111,12 +113,22 @@ difficulties.forEach((diff) => {
 startNowBtn.addEventListener("click", () => {
   welcomeContainer.style.display = "none";
   (document.querySelector(".container") as HTMLDivElement).classList.remove("hidden");
-  gameHidden = false;
   window.addEventListener("keydown", handleKeyboardInput);
   upArrow.addEventListener("click", moveEmptyUp);
   leftArrow.addEventListener("click", moveEmptyLeft);
   downArrow.addEventListener("click", moveEmptyDown);
   rightArrow.addEventListener("click", moveEmptyRight);
+});
+
+settingsBtn.addEventListener("click", () => window.location.reload());
+
+restartBtn.addEventListener("click", () => {
+  createParts();
+  sizeParts(true);
+  shuffleParts();
+  started = false;
+  clearInterval(timeTracker);
+  timeDiv.innerHTML = `time: 0.0`;
 });
 
 function handleKeyboardInput(ev: KeyboardEvent) {
@@ -153,7 +165,7 @@ function createParts() {
   emptyPart = document.querySelector(".container .empty") as HTMLDivElement;
 }
 
-function sizeParts() {
+function sizeParts(force?: boolean) {
   let partsContainerWidth: number;
   let partWidth: number;
   const windowWidth = window.innerWidth;
@@ -161,7 +173,7 @@ function sizeParts() {
   else if (windowWidth < 550) partsContainerWidth = 400;
   else if (windowWidth < 650) partsContainerWidth = 500;
   else partsContainerWidth = 600;
-  if (oldPartsContainerWidth !== partsContainerWidth || gameHidden) {
+  if (oldPartsContainerWidth !== partsContainerWidth || force) {
     oldPartsContainerWidth = partsContainerWidth;
     partsContainer.style.gridTemplateColumns = `repeat(${partsBaseCount}, auto)`;
     partWidth = partsContainerWidth / partsBaseCount;
@@ -237,7 +249,6 @@ function moveEmptyRight() {
 function trackTime() {
   if (!started) {
     started = true;
-    const timeDiv = document.querySelector("div.time") as HTMLDivElement;
     let timePassed = 0;
     timeTracker = setInterval(() => {
       timePassed += 0.1;
@@ -305,5 +316,3 @@ function notImplemented() {
 }
 
 (document.querySelector("button.more") as HTMLButtonElement).onclick = notImplemented;
-(document.querySelector("button:has(.settings)") as HTMLButtonElement).onclick = notImplemented;
-(document.querySelector("button:has(.restart)") as HTMLButtonElement).onclick = notImplemented;

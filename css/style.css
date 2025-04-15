@@ -1,4 +1,5 @@
 * {
+  -webkit-tap-highlight-color: transparent;
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -447,6 +448,9 @@ body {
           color: var(--mantle);
           font-size: 15px;
           border-radius: 6px 0 0 6px;
+          @media(max-width: 480px) {
+            font-size: 13px;
+          }
           &.settings {
             background-color: var(--mauve);
           }
@@ -463,6 +467,9 @@ body {
           padding: 4px 8px;
           text-transform: capitalize;
           font-weight: bold;
+          @media(max-width: 480px) {
+            font-size: 12px;
+          }
           &.settings {
             color: var(--mauve);
           }
@@ -511,7 +518,6 @@ body {
         padding: 10px;
         cursor: pointer;
         color: var(--crust);
-        -webkit-tap-highlight-color: transparent;
         img {
           width: 100%;
         }
