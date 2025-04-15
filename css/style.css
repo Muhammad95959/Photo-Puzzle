@@ -264,13 +264,13 @@ body {
           justify-content: center;
           gap: 15px;
           font-size: 20px;
-          background-color: var(--mauve);
+          background-color: var(--blue);
           cursor: pointer;
           color: var(--base);
           font-weight: bold;
           text-transform: capitalize;
           &:hover {
-            background-color: hsl(277 59% 81% / 100%);
+            background-color: hsl(222 74% 79% / 100%);
           }
         }
       }
@@ -520,6 +520,45 @@ body {
             1px 1px 0 var(--maroon);
         }
       }
+    }
+  }
+
+  .not-implemented {
+    position: absolute;
+    z-index: 1;
+    top: 20px;
+    right: 20px;
+    background-color: var(--mantle);
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 1px 1px 3px 1px var(--crust);
+    transition: opacity 0.5s;
+    &.hidden {
+      visibility: hidden;
+      opacity: 0;
+    }
+    .closeBtn {
+      background-color: var(--red);
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      font-size: 10px;
+      padding: 5px;
+      border-radius: 50%;
+      width: 15px;
+      height: 15px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: var(--mantle);
+      cursor: pointer;
+      &:hover {
+        background-color: hsl(359 68% 76% / 100%);
+      }
+    }
+    .text {
+      color: var(--text);
+      font-weight: bold;
     }
   }
 }

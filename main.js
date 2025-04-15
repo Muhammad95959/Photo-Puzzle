@@ -213,3 +213,21 @@ function stopMoving() {
     rightArrow.removeEventListener("click", moveEmptyRight);
     window.removeEventListener("keydown", handleKeyboardInput);
 }
+const notImplementedDiv = document.querySelector(".not-implemented");
+const notImplementedCloseBtn = document.querySelector(".not-implemented .closeBtn");
+let notImplementedTime;
+notImplementedCloseBtn.addEventListener("click", () => notImplementedDiv.classList.add("hidden"));
+function notImplemented() {
+    clearTimeout(notImplementedTime);
+    if (notImplementedDiv.classList.contains("hidden")) {
+        notImplementedDiv.classList.remove("hidden");
+    }
+    else {
+        notImplementedDiv.style.opacity = "0";
+        setTimeout(() => (notImplementedDiv.style.opacity = "1"), 100);
+    }
+    notImplementedTime = setTimeout(() => notImplementedDiv.classList.add("hidden"), 3000);
+}
+document.querySelector("button.more").onclick = notImplemented;
+document.querySelector("button:has(.settings)").onclick = notImplemented;
+document.querySelector("button:has(.restart)").onclick = notImplemented;
