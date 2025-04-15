@@ -65,7 +65,7 @@ body {
   }
 
   .welcome {
-    display: none;
+    /* display: none; */
     z-index: 1;
     width: 1000px;
     height: 550px;
@@ -87,6 +87,7 @@ body {
       overflow: hidden;
 
       .welcome-card {
+        transition: opacity 1s;
         text-align: center;
         .big {
           font-size: 80px;
@@ -219,6 +220,7 @@ body {
       }
 
       .choose-difficulty {
+        transition: opacity 1s;
         display: grid;
         grid-template-columns: auto auto auto;
         justify-content: center;
@@ -252,6 +254,7 @@ body {
       }
 
       .start-card {
+        transition: opacity 1s;
         text-align: center;
         button {
           padding: 8px 16px;
@@ -290,6 +293,8 @@ body {
       align-items: center;
       width: 60px;
       height: 60px;
+      background-color: transparent;
+      pointer-events: none;
       i {
         color: var(--surface-2);
         font-size: 50px;
@@ -302,6 +307,7 @@ body {
       }
       &.available {
         cursor: pointer;
+        pointer-events: all;
         i {
           color: var(--sky);
         }
@@ -320,7 +326,8 @@ body {
       transform: translateX(-50%);
       i {
         color: var(--surface-2);
-        &:first-of-type {
+        transition: color 0.5s;
+        &.active {
           color: var(--sky);
         }
       }
@@ -330,6 +337,7 @@ body {
   .container {
     transition: opacity 0.5s;
     display: flex;
+    display: none;
     flex-direction: column;
     align-items: center;
     gap: 20px;
@@ -379,8 +387,7 @@ body {
           background-color: transparent;
           font-size: 14px;
           padding: 4px 8px;
-          text-transform: uppercase;
-          font-variant: small-caps;
+          text-transform: capitalize;
           font-weight: bold;
           &.settings {
             color: var(--mauve);

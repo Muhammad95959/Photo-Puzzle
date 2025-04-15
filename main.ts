@@ -1,6 +1,39 @@
+const welcomeLeftArrow = document.querySelector(".welcome .arrow.left") as HTMLButtonElement;
+const welcomeRightArrow = document.querySelector(".welcome .arrow.right") as HTMLButtonElement;
+const welcomeSliderCards = Array.from(document.querySelectorAll(".welcome .slider > div")) as HTMLDivElement[];
+const welcomeNavDots = Array.from(document.querySelectorAll(".welcome .nav-dots > i")) as HTMLElement[];
+
+welcomeLeftArrow.addEventListener("click", () => {
+  welcomeRightArrow.classList.add("available");
+  const currentCard = welcomeSliderCards.filter((card) => card.classList.contains("active"))[0];
+  const prevCard = currentCard.previousElementSibling as HTMLDivElement;
+  currentCard.classList.remove("active");
+  prevCard.classList.add("active");
+  if (prevCard.isSameNode(welcomeSliderCards[0])) {
+    welcomeLeftArrow.classList.remove("available");
+  }
+  const prevCardIndex = welcomeSliderCards.indexOf(prevCard);
+  welcomeNavDots[prevCardIndex + 1].classList.remove("active")
+  welcomeNavDots[prevCardIndex].classList.add("active")
+});
+
+welcomeRightArrow.addEventListener("click", () => {
+  welcomeLeftArrow.classList.add("available");
+  const currentCard = welcomeSliderCards.filter((card) => card.classList.contains("active"))[0];
+  const nextCard = currentCard.nextElementSibling as HTMLDivElement;
+  currentCard.classList.remove("active");
+  nextCard.classList.add("active");
+  if (nextCard.isSameNode(welcomeSliderCards[welcomeSliderCards.length - 1])) {
+    welcomeRightArrow.classList.remove("available");
+  }
+  const nextCardIndex = welcomeSliderCards.indexOf(nextCard);
+  welcomeNavDots[nextCardIndex - 1].classList.remove("active")
+  welcomeNavDots[nextCardIndex].classList.add("active")
+});
+
 const partsContainer = document.querySelector(".parts") as HTMLDivElement;
-const partsCountInRow: number = 3;
-const partsCount: number = partsCountInRow * partsCountInRow;
+const partsBaseCount: number = 3;
+const partsCount: number = partsBaseCount * partsBaseCount;
 
 // create the parts and add them to the container
 for (let i = 1; i <= partsCount; i++) {
@@ -73,8 +106,8 @@ function resizeParts() {
   else partsContainerWidth = 600;
   if (oldPartsContainerWidth !== partsContainerWidth) {
     oldPartsContainerWidth = partsContainerWidth;
-    partsContainer.style.gridTemplateColumns = `repeat(${partsCountInRow}, auto)`;
-    partWidth = partsContainerWidth / partsCountInRow;
+    partsContainer.style.gridTemplateColumns = `repeat(${partsBaseCount}, auto)`;
+    partWidth = partsContainerWidth / partsBaseCount;
     parts.forEach((part) => {
       part.style.backgroundSize = `${partsContainerWidth}px ${partsContainerWidth}px`;
       part.style.width = partWidth + "px";
@@ -86,8 +119,8 @@ function resizeParts() {
     let index = 0,
       row = 0,
       col = 0;
-    for (row = 0; row < partsCountInRow; row++) {
-      for (col = 0; col < partsCountInRow; col++) {
+    for (row = 0; row < partsBaseCount; row++) {
+      for (col = 0; col < partsBaseCount; col++) {
         parts[index++].style.backgroundPosition = `-${partWidth * col}px -${partWidth * row}px`;
       }
     }
@@ -97,9 +130,9 @@ function resizeParts() {
 
 function moveEmptyUp() {
   const emptyOrder: number = +emptyPart.style.order;
-  if (emptyOrder <= partsCount - partsCount / partsCountInRow) {
+  if (emptyOrder <= partsCount - partsCount / partsBaseCount) {
     trackTime();
-    const partToSwap = parts.find((part) => +part.style.order === emptyOrder + partsCountInRow);
+    const partToSwap = parts.find((part) => +part.style.order === emptyOrder + partsBaseCount);
     if (partToSwap) swapParts(emptyPart, partToSwap);
   }
   checkCorrectOrder(true);
@@ -107,7 +140,7 @@ function moveEmptyUp() {
 
 function moveEmptyLeft() {
   const emptyOrder: number = +emptyPart.style.order;
-  if (emptyOrder % partsCountInRow !== 0) {
+  if (emptyOrder % partsBaseCount !== 0) {
     trackTime();
     const partToSwap = parts.find((part) => +part.style.order === emptyOrder + 1);
     if (partToSwap) swapParts(emptyPart, partToSwap);
@@ -117,9 +150,9 @@ function moveEmptyLeft() {
 
 function moveEmptyDown() {
   const emptyOrder: number = +emptyPart.style.order;
-  if (emptyOrder > partsCount / partsCountInRow) {
+  if (emptyOrder > partsCount / partsBaseCount) {
     trackTime();
-    const partToSwap = parts.find((part) => +part.style.order === emptyOrder - partsCountInRow);
+    const partToSwap = parts.find((part) => +part.style.order === emptyOrder - partsBaseCount);
     if (partToSwap) swapParts(emptyPart, partToSwap);
   }
   checkCorrectOrder(true);
@@ -127,7 +160,7 @@ function moveEmptyDown() {
 
 function moveEmptyRight() {
   const emptyOrder: number = +emptyPart.style.order;
-  if (emptyOrder % partsCountInRow !== 1) {
+  if (emptyOrder % partsBaseCount !== 1) {
     trackTime();
     const partToSwap = parts.find((part) => +part.style.order === emptyOrder - 1);
     if (partToSwap) swapParts(emptyPart, partToSwap);
