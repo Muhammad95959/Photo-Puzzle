@@ -23,7 +23,26 @@ let emptyPart;
 let parts;
 let lastPart = document.createElement("div");
 lastPart.classList.add(`part-${partsCount}`);
-// create the parts and size them according to the browser width then shuffle them
+// restore from localStorage
+images.forEach((image) => {
+    const imageName = window.localStorage.getItem("selected-image") || images[0].dataset.name;
+    if (image.dataset.name === imageName) {
+        image.classList.add("selected");
+    }
+    else {
+        image.classList.remove("selected");
+    }
+});
+difficulties.forEach((diff) => {
+    const difficulty = window.localStorage.getItem("difficulty") || difficulties[0].dataset.diff;
+    if (diff.dataset.diff === difficulty) {
+        diff.classList.add("selected");
+    }
+    else {
+        diff.classList.remove("selected");
+    }
+});
+// create, size and shuffle puzzle parts
 createParts();
 sizeParts();
 shuffleParts();
@@ -60,6 +79,7 @@ images.forEach((image) => {
         image.classList.add("selected");
         const imageName = image.dataset.name;
         document.documentElement.style.setProperty("--imageUrl", `url('../assets/${imageName}')`);
+        window.localStorage.setItem("selected-image", imageName);
     });
 });
 difficulties.forEach((diff) => {
@@ -68,6 +88,7 @@ difficulties.forEach((diff) => {
         diff.classList.add("selected");
         partsBaseCount = parseInt(diff.dataset.diff);
         partsCount = partsBaseCount * partsBaseCount;
+        window.localStorage.setItem("difficulty", partsBaseCount.toString());
         createParts();
         sizeParts();
         shuffleParts();
