@@ -209,6 +209,7 @@ body {
         }
         .dialog {
           position: absolute;
+          z-index: 2;
           background-color: var(--mantle);
           box-shadow: 1px 1px 5px 1px var(--crust);
           padding: 40px;
@@ -243,6 +244,9 @@ body {
             font-size: 20px;
             font-weight: bold;
             margin-bottom: 20px;
+            @media (max-width: 600px) {
+              font-size: 16px;
+            }
           }
           .buttons {
             display: flex;
@@ -255,6 +259,9 @@ body {
               font-size: 16px;
               font-weight: bold;
               cursor: pointer;
+              @media (max-width: 600px) {
+                font-size: 14px;
+              }
               &.local {
                 background-color: var(--flamingo);
                 &:hover {
@@ -449,7 +456,7 @@ body {
           color: var(--mantle);
           font-size: 15px;
           border-radius: 6px 0 0 6px;
-          @media(max-width: 480px) {
+          @media (max-width: 480px) {
             font-size: 13px;
           }
           &.settings {
@@ -468,7 +475,7 @@ body {
           padding: 4px 8px;
           text-transform: capitalize;
           font-weight: bold;
-          @media(max-width: 480px) {
+          @media (max-width: 480px) {
             font-size: 12px;
           }
           &.settings {
