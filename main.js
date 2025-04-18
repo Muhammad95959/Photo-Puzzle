@@ -107,11 +107,7 @@ difficulties.forEach((diff) => {
 startNowBtn.addEventListener("click", () => {
     welcomeContainer.style.display = "none";
     document.querySelector(".container").classList.remove("hidden");
-    window.addEventListener("keydown", handleKeyboardInput);
-    upArrow.addEventListener("click", moveEmptyUp);
-    leftArrow.addEventListener("click", moveEmptyLeft);
-    downArrow.addEventListener("click", moveEmptyDown);
-    rightArrow.addEventListener("click", moveEmptyRight);
+    startNav();
 });
 settingsBtn.addEventListener("click", () => window.location.reload());
 restartBtn.addEventListener("click", () => {
@@ -119,9 +115,16 @@ restartBtn.addEventListener("click", () => {
     sizeParts(true);
     shuffleParts();
     started = false;
-    clearInterval(timeTracker);
     timeDiv.innerHTML = `time: 0.0`;
 });
+function startNav() {
+    stopMoving();
+    window.addEventListener("keydown", handleKeyboardInput);
+    upArrow.addEventListener("click", moveEmptyUp);
+    leftArrow.addEventListener("click", moveEmptyLeft);
+    downArrow.addEventListener("click", moveEmptyDown);
+    rightArrow.addEventListener("click", moveEmptyRight);
+}
 function handleKeyboardInput(ev) {
     switch (ev.key) {
         case "ArrowUp":
@@ -169,6 +172,8 @@ function sizeParts(force) {
         partsContainerWidth = 600;
     if (oldPartsContainerWidth !== partsContainerWidth || force) {
         oldPartsContainerWidth = partsContainerWidth;
+        partsContainer.style.borderWidth = "0";
+        partsContainer.style.gap = "10px";
         partsContainer.style.gridTemplateColumns = `repeat(${partsBaseCount}, auto)`;
         partWidth = partsContainerWidth / partsBaseCount;
         parts.forEach((part) => {
